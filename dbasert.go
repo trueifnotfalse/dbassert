@@ -9,16 +9,19 @@ import (
     "testing"
 )
 
+// DBAssert provides database assertion methods around the testing.TB interface.
 type DBAssert struct {
     conn *sql.DB
 }
 
+// New creates a new DBAssert
 func New(conn *sql.DB) *DBAssert {
     return &DBAssert{
         conn: conn,
     }
 }
 
+// ExistsInDatabase check if row exists in table
 func (r *DBAssert) ExistsInDatabase(t testing.TB, tableName string, data map[string]any) bool {
     exists, err := r.existsInDatabase(tableName, data)
     if err != nil {
@@ -41,6 +44,7 @@ func (r *DBAssert) ExistsInDatabase(t testing.TB, tableName string, data map[str
     return true
 }
 
+// NotExistsInDatabase check if row exists in table
 func (r *DBAssert) NotExistsInDatabase(t testing.TB, tableName string, data map[string]any) bool {
     exists, err := r.existsInDatabase(tableName, data)
     if err != nil {
