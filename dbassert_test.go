@@ -54,6 +54,7 @@ func TestPublicExists(t *testing.T) {
         return
     }
     defer shutDown(conn)
+    defer conn.Close()
     s := "random string"
     _, err = conn.Exec(fmt.Sprintf(`INSERT INTO %s(name) VALUES('%s')`, tableName, s))
     assert.Nil(t, err)
@@ -72,6 +73,7 @@ func TestPublicNotExists(t *testing.T) {
         return
     }
     defer shutDown(conn)
+    defer conn.Close()
     s := "random string"
     _, err = conn.Exec(fmt.Sprintf(`INSERT INTO %s(name) VALUES('%s')`, tableName, s))
     assert.Nil(t, err)
@@ -90,6 +92,7 @@ func TestPrivateExists(t *testing.T) {
         return
     }
     defer shutDown(conn)
+    defer conn.Close()
     s := "random string"
     _, err = conn.Exec(fmt.Sprintf(`INSERT INTO %s(name) VALUES('%s')`, tableName, s))
     assert.Nil(t, err)
@@ -109,6 +112,7 @@ func TestPrivateNotExists(t *testing.T) {
         return
     }
     defer shutDown(conn)
+    defer conn.Close()
     s := "random string"
     _, err = conn.Exec(fmt.Sprintf(`INSERT INTO %s(name) VALUES('%s')`, tableName, s))
     assert.Nil(t, err)
@@ -128,6 +132,7 @@ func TestPrivateEmptyAttributes(t *testing.T) {
         return
     }
     defer shutDown(conn)
+    defer conn.Close()
     s := "random string"
     _, err = conn.Exec(fmt.Sprintf(`INSERT INTO %s(name) VALUES('%s')`, tableName, s))
     assert.Nil(t, err)
