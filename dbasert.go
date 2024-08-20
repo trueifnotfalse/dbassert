@@ -23,6 +23,7 @@ func New(conn *sql.DB) *DBAssert {
 
 // ExistsInDatabase check if row exists in table
 func (r *DBAssert) ExistsInDatabase(t testing.TB, tableName string, data map[string]any) bool {
+    t.Helper()
     exists, err := r.existsInDatabase(tableName, data)
     if err != nil {
         t.Errorf(err.Error())
@@ -46,6 +47,7 @@ func (r *DBAssert) ExistsInDatabase(t testing.TB, tableName string, data map[str
 
 // NotExistsInDatabase check if row exists in table
 func (r *DBAssert) NotExistsInDatabase(t testing.TB, tableName string, data map[string]any) bool {
+    t.Helper()
     exists, err := r.existsInDatabase(tableName, data)
     if err != nil {
         t.Errorf(err.Error())
@@ -77,6 +79,10 @@ func (r *DBAssert) existsInDatabase(tableName string, data map[string]any) (bool
         exists        bool
     )
     for column, value := range data {
+        if value == nil {
+            fields = append(fields, fmt.Sprintf("%s is null", column))
+            continue
+        }
         switch value.(type) {
         case string:
             valueAsString = "'" + value.(string) + "'"
