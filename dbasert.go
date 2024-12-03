@@ -84,6 +84,8 @@ func (r *DBAssert) existsInDatabase(tableName string, data map[string]any) (bool
             continue
         }
         switch value.(type) {
+        case bool:
+            valueAsString = strconv.FormatBool(value.(bool))
         case string:
             valueAsString = "'" + value.(string) + "'"
         case int, int8, int16, int32, int64, uint, uint8, uint16, uint32, uint64:
